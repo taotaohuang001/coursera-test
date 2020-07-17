@@ -2,34 +2,27 @@
 'use strict';
 
 angular.module('assignment1', [])
-.controller('MyFirstController', function ($scope) {
-  $scope.setMessage="";
+.controller('LunchCheckController', function ($scope) {
   $scope.lunchItems="";
-  $scope.inputBoxStyle={};
-  $scope.turnGreen = function() {
-    $scope.inputBoxStyle.borderClass = 'green-border';
-  };
-  $scope.listenFor=function(){
-    var itemArray=$scope.lunchItems.split(',');
+  $scope.showMessage="";
+  $scope.monitor=function(){
     var count=0;
-
-    var emptyString="Please enter data first";
-    var lessThanThree="Enjoy!";
-    var moreThanThree="Too Much !";
-    for (var i=0; i<itemArray.length; i++){
-      if(itemArray[i]){
+    var items=$scope.lunchItems.split(',');
+    var emptybox="Please enter data first";
+    var enjoy="Enjoy!";
+    var toomuch="Too Much !";
+    for (var i=0; i<items.length; i++){
+      if(items[i]){
         count++;
       }
     }
     if (count==0){
-      $scope.turnGreen();
-      $scope.setMessage=emptyString;
-
-
-    } else if (count<=3){
-      $scope.setMessage=lessThanThree;
+      $scope.showMessage=emptybox;
+      $scope.style="color:red;"
+    } else if (count>=3){
+      $scope.showMessage=toomuch;
     } else {
-      $scope.setMessage=moreThanThree;
+      $scope.showMessage=enjoy;
     }
   }
 });
