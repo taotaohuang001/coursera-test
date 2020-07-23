@@ -4,15 +4,16 @@
     angular.module('ShoppingListCheckOff', [])
         .controller('ToBuyController', ToBuyController)
         .controller('AlreadyBoughtController', AlreadyBoughtController)
-        .service('ShoppingListCheckOffService', ShoppingListCheckOffService);
+        .service('ShoppingListCheckOffService', ShoppingListCheckOffService)
+        .service('IfCheckerService', IfCheckerService);
 
 
-    ToBuyController.$inject = ['ShoppingListCheckOffService'];
-    function ToBuyController(ShoppingListCheckOffService) {
+    ToBuyController.$inject = ['ShoppingListCheckOffService', 'IfCheckerService'];
+    function ToBuyController(ShoppingListCheckOffService, IfCheckerService) {
         var toBuy = this;
 
         toBuy.isEmpty = function () {
-            return ShoppingListCheckOffService.isEmptyArray(toBuy.getItems());
+            return IfCheckerService.isEmptyArray(toBuy.getItems());
         };
 
         toBuy.getItems = function() {
@@ -24,12 +25,12 @@
         }
     }
 
-    AlreadyBoughtController.$inject = ['ShoppingListCheckOffService'];
-    function AlreadyBoughtController(ShoppingListCheckOffService) {
+    AlreadyBoughtController.$inject = ['ShoppingListCheckOffService', 'IfCheckerService'];
+    function AlreadyBoughtController(ShoppingListCheckOffService, IfCheckerService) {
         var alreadyBought = this;
 
         alreadyBought.isEmpty = function () {
-            return ShoppingListCheckOffService.isEmptyArray(alreadyBought.getItems());
+            return IfCheckerService.isEmptyArray(alreadyBought.getItems());
         };
 
         alreadyBought.getItems = function () {
@@ -62,10 +63,13 @@
             service.boughtItems.push(items[itemIndex]);
             items.splice(itemIndex, 1);
         };
+    }
+
+function IfCheckerService() {
+        var service = this;
 
         service.isEmptyArray = function(list) {
             return list.length === 0;
         }
     }
-
 })();

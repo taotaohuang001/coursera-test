@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en" ng-app='ShoppingListCheckOff'>
+  <head>
+    <title>Shopping List App for QQ</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="angular.min.js"></script>
+    <script src="app.js"></script>
+    <link rel="stylesheet" href="styles/bootstrap.min.css">
+    <style>
+      .emptyMessage {
+        font-weight: bold;
+        color: red;
+        font-size: 1.2em;
+      }
+      li {
+        margin-bottom: 7px;
+        font-size: 1.2em;
+      }
+      li > button {
+        margin-left: 6px;
+      }
+      button > span {
+        color: green;
+      }
+    </style>
+  </head>
+<body>
+
+  <div class="container">
+  <h1>Shopping List App for QQ</h1>
+
+
+<!-- Adding extra items -->
+
+  <div ng-controller='ToBuyController as ToBuyAdder'>
+  <h2>Add Extra Item</h2>
+    <input type="text" ng-model="ToBuyAdder.itemQuantity" placeholder="quantity">
+    <input type="text" ng-model="ToBuyAdder.itemName" placeholder="item name">
+    <button ng-click="ToBuyAdder.addItem();">Add EXTRA Item To Shopping List</button>
+  </div>
+
+
+
+  <div class="row">
+
+    <!-- To Buy List -->
+    <div class="col-md-6" ng-controller='AlreadyBoughtController as BroughtList'>
+    <h2>To Buy</h2>
+      <ul>
+        <li ng-repeat="item in BroughtList.items">
+          {{ item.quantity }} {{ item.name }}
+          <button ng-click="BroughtList.removeItem($index);">
+            <span class="glyphicon glyphicon-ok"></span>
+            Bought</button>
+        </li>
+      </ul>
+      <div class="emptyMessage" ng-if="BroughtList.isEmpty()">Everything is bought!</div>
+      <div style = "color : green" class="emptyMessage" ng-if="!BroughtList.isEmpty()">Please add your item.</div>
+    </div>
+
+    <!-- Already Bought List -->
+    <div class="col-md-6" ng-controller='TestController as Test'>
+     <h2>Bought Items </h2>
+     <ul>
+       <li ng-repeat="item in Test.boughtList"> {{item.quantity}} {{item.name}}
+       </li>
+     </ul>
+     <div ng-if="Test.isEmpty()" class="emptyMessage">Nothing bought yet.</div>
+   </div>
+  </div>
+</div>
+
+</body>
+</html>
