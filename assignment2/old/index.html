@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en" ng-app="ShoppingListCheckOff">
+  <head>
+    <title>Shopping List Check Off</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="angular.min.js"></script>
+    <script src="app.js"></script>
+    <style> body { font-size: 1.2em; }</style>
+  </head>
+<body>
+  <h1>Custom Service</h1>
+  <div ng-controller='ToBuyController as ToBuyAdder'>
+    <input type="text" ng-model="ToBuyAdder.itemName" placeholder="item name">
+    <input type="text" ng-model="ToBuyAdder.itemQuantity" placeholder="quantity">
+    <button ng-click="ToBuyAdder.addItem();">Add Item To Shopping List</button>
+  </div>
+
+  <div ng-controller='AlreadyBoughtController as BroughtList'>
+    <ol>
+      <li ng-repeat="item in BroughtList.items">
+        {{ item.quantity }} of {{ item.name }}
+        <button ng-click="BroughtList.removeItem($index);">Remove Item</button>
+      </li>
+    </ol>
+  </div>
+</body>
+</html>
+
+<!-- <div class="container">
+<h1>Shopping List Check Off</h1>
+</div> -->
+
+  <!-- <link rel="stylesheet" href="styles/bootstrap.min.css"> -->
+  <!-- <style>
+    .emptyMessage {
+      font-weight: bold;
+      color: red;
+      font-size: 1.2em;
+    }
+    li {
+      margin-bottom: 7px;
+      font-size: 1.2em;
+    }
+    li > button {
+      margin-left: 6px;
+    }
+    button > span {
+      color: green;
+    }
+  </style> -->
+
+    <!-- To Buy List -->
+    <!-- <div class="col-md-6">
+     <h2>To Buy:</h2>
+     <ul>
+       <li>Buy 10 cookies <button class="btn btn-default"><span class="glyphicon glyphicon-ok"></span> Bought</button></li>
+       <li>Buy 10 cookies <button class="btn btn-default"><span class="glyphicon glyphicon-ok"></span> Bought</button></li>
+     </ul>
+     <div class="emptyMessage">Everything is bought!</div>
+    </div> -->
+
+    <!-- Already Bought List -->
+    <!-- <div class="col-md-6">
+     <h2>Already Bought:</h2>
+     <ul>
+       <li>Bought 10 cookies</li>
+     </ul>
+     <div class="emptyMessage">Nothing bought yet.</div>
+    </div>
+  </div> -->
+
+<!-- </div> -->
