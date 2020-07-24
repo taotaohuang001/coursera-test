@@ -52,9 +52,12 @@
           <button ng-click="BroughtList.removeItem($index);">
             <span class="glyphicon glyphicon-ok"></span>
             Bought</button>
+          <button ng-click="BroughtList.TrueremoveItem($index);">
+            <span style="color:red" class="glyphicon glyphicon-remove"></span>
+            Remove Item</button>
         </li>
       </ul>
-      <div class="emptyMessage" ng-if="BroughtList.isEmpty()">Everything is bought!</div>
+      <div class="emptyMessage" ng-if="BroughtList.items==0">Everything is bought!</div>
       <div style = "color : green" class="emptyMessage" ng-if="!BroughtList.isEmpty()">Please add your item.</div>
     </div>
 
@@ -63,6 +66,9 @@
      <h2>Bought Items </h2>
      <ul>
        <li ng-repeat="item in Test.boughtList"> {{item.quantity}} {{item.name}}
+         <button ng-click="Test.RemoveItemFromBrought($index);">
+           <span style="color:red" class="glyphicon glyphicon-remove"></span>
+           Remove Item</button>
        </li>
      </ul>
      <div ng-if="Test.isEmpty()" class="emptyMessage">Nothing bought yet.</div>
