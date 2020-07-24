@@ -57,7 +57,7 @@
             Remove Item</button>
         </li>
       </ul>
-      <div class="emptyMessage" ng-if="BroughtList.items==0">Everything is bought!</div>
+      <div class="emptyMessage" ng-if="BroughtList.items.length == 0 && BroughtList.boughtList.length != 0">Everything is bought!</div>
       <div style = "color : green" class="emptyMessage" ng-if="!BroughtList.isEmpty()">Please add your item.</div>
     </div>
 
