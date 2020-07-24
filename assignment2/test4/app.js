@@ -68,11 +68,6 @@ function ShoppingListCheckOffService() {
 
   // List of shopping items
   var items = [
-    // {name : "Milk", quantity: 1},
-    // {name : "Chocolate", quantity: 2},
-    // {name : "Peanut Butter", quantity: 3},
-    // {name : "Pepto Bismol (Chocolate flavor)", quantity: 4},
-    // {name : "Pepto Bismol (Cookie flavor)", quantity: 5},
 ];
 
   var boughtList = [];
