@@ -26,6 +26,14 @@ AlreadyBoughtController.$inject = ['ShoppingListCheckOffService'];
 function AlreadyBoughtController(ShoppingListCheckOffService) {
   var BroughtList = this;
 
+  BroughtList.addQuantity = function(itemIndex){
+    return ShoppingListCheckOffService.addQuantity(itemIndex);
+  };
+
+  BroughtList.minusQuantity = function(itemIndex){
+    return ShoppingListCheckOffService.minusQuantity(itemIndex);
+  };
+
   BroughtList.isEmpty = function (){
     return ShoppingListCheckOffService.isEmptyArray(ShoppingListCheckOffService.getItems()) && ShoppingListCheckOffService.getBought().length!==0;
   };
@@ -38,9 +46,7 @@ function AlreadyBoughtController(ShoppingListCheckOffService) {
   BroughtList.TrueremoveItem = function (itemIndex) {
     ShoppingListCheckOffService.TrueremoveItem(itemIndex);
     };
-  // BroughtList.itemsCheck = function(array){
-  //   return ShoppingListCheckOffService.getItems().length===0
-  // }
+
   BroughtList.boughtList = ShoppingListCheckOffService.getBought();
 
   }
@@ -68,6 +74,11 @@ function ShoppingListCheckOffService() {
 
   // List of shopping items
   var items = [
+    // {name : "Milk", quantity: 1},
+    // {name : "Chocolate", quantity: 2},
+    // {name : "Peanut Butter", quantity: 3},
+    // {name : "Pepto Bismol (Chocolate flavor)", quantity: 4},
+    // {name : "Pepto Bismol (Cookie flavor)", quantity: 5},
 ];
 
   var boughtList = [];
@@ -79,6 +90,18 @@ function ShoppingListCheckOffService() {
     };
     items.push(item);
   };
+
+  service.addQuantity = function (itemIndex){
+
+    items[itemIndex].quantity++
+
+  }
+
+  service.minusQuantity = function (itemIndex){
+    if (items[itemIndex].quantity>0){
+          items[itemIndex].quantity--
+    }
+  }
 
   service.removeItem = function (itemIndex) {
 

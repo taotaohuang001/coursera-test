@@ -27,7 +27,7 @@
 <body>
 
   <div class="container">
-  <h1>Shopping List App for QQ</h1>
+  <h1>Shopping List App for 甲方爸爸QQ</h1>
 
 
 <!-- Adding extra items -->
@@ -48,7 +48,17 @@
     <h2>To Buy</h2>
       <ul>
         <li ng-repeat="item in BroughtList.items">
-          {{ item.quantity }} {{ item.name }}
+
+          <button ng-click="BroughtList.addQuantity($index);">
+            <span style="color:green" class="glyphicon glyphicon-plus"></span>
+            </button>
+          {{ item.quantity }}
+
+          <button ng-click="BroughtList.minusQuantity($index);">
+            <span style="color:red" class="glyphicon glyphicon-minus"></span>
+            </button>
+
+          {{ item.name }}
           <button ng-click="BroughtList.removeItem($index);">
             <span class="glyphicon glyphicon-ok"></span>
             Bought</button>
@@ -65,7 +75,13 @@
     <div class="col-md-6" ng-controller='TestController as Test'>
      <h2>Bought Items </h2>
      <ul>
-       <li ng-repeat="item in Test.boughtList"> {{item.quantity}} {{item.name}}
+       <li ng-repeat="item in Test.boughtList">
+
+
+         {{item.quantity}}
+
+
+         {{item.name}}
          <button ng-click="Test.RemoveItemFromBrought($index);">
            <span style="color:red" class="glyphicon glyphicon-remove"></span>
            Remove Item</button>
