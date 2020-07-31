@@ -3,54 +3,43 @@
 
   angular.module('NarrowItDownApp',[]).
   controller('NarrowItDownController', NarrowItDownController).
-  // controller('FoundItemsDirectiveController', FoundItemsDirectiveController).
   service('MenuSearchService', MenuSearchService).
   filter('search', SearchTermFilter).
-  directive('foundItems', FoundItems);
+  directive('foundItems', FoundItemsDirective);
 
+  NarrowItDownController.$inject = ['MenuSearchService','$filter']
+  function NarrowItDownController(MenuSearchService, $filter){
+    var Narrow = this;
+    Narrow.searchTerm="";
+    Narrow.searchTermSubmitted="";
 
-  function FoundItems(){
-    var ddo = {
-      templateUrl: 'foundItems.html',
-      scope: {
-        items: '<',
-        onRemove: '&'
-      },
-      // controller: 'FoundItemsDirectiveController as controller',
-      // bindToController: true
-    };
-
-    return ddo;
-  }
-
-  // function FoundItemsDirectiveController(){
-  //   var controller = this;
-  // }
-
-  NarrowItDownController.$inject = ['MenuSearchService']
-  function NarrowItDownController(MenuSearchService){
-    var controller = this;
-
-    controller.searchTerm="";
-
-    controller.found = [];
-    controller.getMenuItems = function(){
-        var promise = MenuSearchService.getMatchedMenuItems(controller.searchTerm);
+    Narrow.found = [];
+    Narrow.getMenuItems = function(){
+      // Filter search items description to lowcase
+      Narrow.searchTermSubmitted=$filter('lowercase')(Narrow.searchTerm);
+        var promise = MenuSearchService.getMatchedMenuItems(Narrow.searchTermSubmitted);
         promise.then(function(result){
-          controller.found = result;
+          Narrow.found = result;
         });
+    };
+
+    // remove one item with splice
+      Narrow.remoteItem = function(index){
+      Narrow.found.splice(index, 1);
+
+      Narrow.lastRemoveItem = Narrow.found[index].name + " was removed"
+
+      console.log(Narrow.lastRemoveItem)
 
     };
 
-    controller.remoteItem = function(index){
-      controller.found.splice(index, 1);
-    };
+
   }
 
-  MenuSearchService.$inject = ['$http', '$filter']
-  function MenuSearchService($http, $filter ){
+  MenuSearchService.$inject = ['$http', 'searchFilter']
+  function MenuSearchService($http, searchFilter ){
     var service = this;
-    service.getMatchedMenuItems = function(searchTerm){
+    service.getMatchedMenuItems = function(SearchItem){
       return $http(
         {
           method:'GET',
@@ -58,29 +47,46 @@
         }
       ).then(function(result){
           var filteredResult = [];
-          if(searchTerm.trim() != ""){
-            var rawResult = result.data;
-            filteredResult = $filter('search')(rawResult.menu_items, searchTerm);
+          if(SearchItem.trim() != ""){
+            filteredResult = searchFilter(result.data.menu_items, SearchItem);
           }
           return filteredResult;
 
       });
     };
 
+
+    
+
+  }
+
+  function FoundItemsDirective(){
+    var ddo = {
+      templateUrl: 'foundItems.html',
+      scope: {
+        items: '<',
+        onRemove: '&'
+      },
+      // controller: NarrowItDownController,
+      // controllerAs: 'Narrow',
+      // bindToController: true
+    };
+    return ddo;
   }
 
   function SearchTermFilter(){
-    return function(input, search){
+    return function(menuDescriptionList, searchKeyword){
 
       var filtered = [];
 
-      input = input || [];
-      search = search || "";
+      menuDescriptionList = menuDescriptionList || [];
+      searchKeyword = searchKeyword || "";
 
-      for(var i=0;i<input.length;i++){
-          var item = input[i];
-          var str = item.description;
-          if(str.indexOf(search)>=0){
+      for(var i=0;i<menuDescriptionList.length;i++){
+          var item = menuDescriptionList[i];
+          // Making description the lowercase to match results
+          var str = item.description.toLowerCase();
+          if(str.indexOf(searchKeyword)>=0){
             filtered.push(item);
           }
       }
