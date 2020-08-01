@@ -25,15 +25,11 @@
 
     // remove one item with splice
       Narrow.remoteItem = function(index){
+      var RemoveItem = Narrow.found[index].name
       Narrow.found.splice(index, 1);
-
-      Narrow.lastRemoveItem = Narrow.found[index].name + " was removed"
-
+      Narrow.lastRemoveItem = RemoveItem + " was removed"
       console.log(Narrow.lastRemoveItem)
-
     };
-
-
   }
 
   MenuSearchService.$inject = ['$http', 'searchFilter']
@@ -51,13 +47,8 @@
             filteredResult = searchFilter(result.data.menu_items, SearchItem);
           }
           return filteredResult;
-
       });
     };
-
-
-    
-
   }
 
   function FoundItemsDirective(){
@@ -67,21 +58,15 @@
         items: '<',
         onRemove: '&'
       },
-      // controller: NarrowItDownController,
-      // controllerAs: 'Narrow',
-      // bindToController: true
     };
     return ddo;
   }
 
   function SearchTermFilter(){
     return function(menuDescriptionList, searchKeyword){
-
       var filtered = [];
-
       menuDescriptionList = menuDescriptionList || [];
       searchKeyword = searchKeyword || "";
-
       for(var i=0;i<menuDescriptionList.length;i++){
           var item = menuDescriptionList[i];
           // Making description the lowercase to match results
