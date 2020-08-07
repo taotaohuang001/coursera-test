@@ -1,3 +1,4 @@
+<!-- <ui-view></ui-view> -->
 <ul>
   <table class="table">
     <thead>
@@ -5,6 +6,8 @@
         <th>Short name</th>
         <th>Name</th>
         <th>Food Description</th>
+        <th>Price small</th>
+        <th>Price large</th>
       </tr>
     </thead>
     <tbody ng-repeat="item in $ctrl.items">
@@ -18,12 +21,13 @@
         <td>
           {{item.description}}
         </td>
+        <td>
+          {{item.price_small}}
+        </td>
+        <td>
+          {{item.price_large}}
+        </td>
       </tr>
     </tbody>
   </table>
-
-
-
-
-
 </ul>

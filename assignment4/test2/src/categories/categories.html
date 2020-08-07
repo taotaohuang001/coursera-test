@@ -1,7 +1,7 @@
 <h2>Please select a category and check out more information of our food</h2>
 <a ui-sref="home"> <button> Home </button></a>
 <ul>
-    <li ng-repeat="category in $ctrl.categories" ui-sref="categories.category({categoryId: category.short_name})">
+    <li ng-repeat="category in $ctrl.categories" ui-sref="category({categoryId: category.short_name})">
       <button type="button" name="button" style='background:pink'>
         {{ category.name }}
     </button> </li>
