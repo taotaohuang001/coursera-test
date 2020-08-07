@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Superb Menu App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles/bootstrap.min.css">
+    <link rel="stylesheet" href="styles/styles.css">
+
+    <!-- Source -->
+    <script type="application/javascript" src="lib/angular.js"></script>
+    <script type="application/javascript" src="lib/ui-router.js"></script>
+
+    <!-- Modules -->
+    <script type="application/javascript" src="src/menuapp.module.js"></script>
+    <script type="application/javascript" src="src/data/data.module.js"></script>
+
+    <!-- Services -->
+    <script type="application/javascript" src="src/data/menudata.service.js"></script>
+
+    <!-- components -->
+    <script type="application/javascript" src="src/categories/categories.component.js"></script>
+    <script type="application/javascript" src="src/categoryDetail/categoryDetails.component.js"></script>
+
+    <!-- Controllers -->
+    <script type="application/javascript" src="src/categories/categoriesrouter.controller.js"></script>
+    <script type="application/javascript" src="src/categoryDetail/categoryDetails.controller.js"></script>
+
+    <!-- Routes -->
+    <script type="application/javascript" src="src/routes.js"></script>
+</head>
+<body ng-app="MenuApp">
+<h1>Welcome to our awesome Menu App!</h1>
+
+<ui-view></ui-view>
+
+</body>
+</html>
