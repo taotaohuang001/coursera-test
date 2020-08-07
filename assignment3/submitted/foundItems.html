@@ -11,15 +11,15 @@
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="item in items">
+      <tr ng-repeat="whatever in items">
         <td>
-          {{item.short_name}}
+          {{whatever.short_name}}
         </td>
         <td>
-          {{item.name}}
+          {{whatever.name}}
         </td>
         <td>
-          {{item.description}}
+          {{whatever.description}}
         </td>
         <td>
           <button ng-click="onRemove({index: $index})" class="btn btn-danger">Don't want this one!</button>

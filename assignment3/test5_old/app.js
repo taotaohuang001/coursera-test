@@ -51,7 +51,7 @@ function testController(testService,$http){
             //       console.log('not work') });
 
 
-      //
+      // 
       // Ctrl.listServiceItems = testService.items + testService.savedData
             Ctrl.listServiceItems =testService.savedData
   }
@@ -74,19 +74,15 @@ function testService($http){
     $http({
       method: 'GET',
       url: 'https://davids-restaurant.herokuapp.com/menu_items.json'
-    }).then(
-      function successCallback(response) {
+    }).then(function successCallback(response) {
       var savedData = [];
       savedData = response.data.menu_items[1].name
       service.savedData.push(savedData)
       console.log('reponse data is:' + response.data.menu_items[1].name)
       console.log('  service.savedData is:' +   service.savedData)
       console.log('savedData: ' + savedData )
-      },
-      function errorCallback(response) {
-            console.log('not work')
-           }
-         );
+      }, function errorCallback(response) {
+            console.log('not work') });
   }
 
 }

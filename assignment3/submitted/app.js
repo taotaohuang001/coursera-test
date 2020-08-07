@@ -8,112 +8,64 @@
   directive('foundItems', FoundItemsDirective);
 
   NarrowItDownController.$inject = ['MenuSearchService']
-  function NarrowItDownController(MenuSearchService,FindMenuService,$http){
+  function NarrowItDownController(MenuSearchService){
     var Narrow = this;
 
-    Narrow.searchedItem = "Egg"
+    Narrow.searchedItem = ""
 
-
-    // console.log("Narrow.found:" + Narrow.found[1]);
-    // console.log("Narrow.found2:" + (MenuSearchService.getMatchedMenuItems(Narrow.searchedItem))[0].description);
-    Narrow.found = MenuSearchService.getMatchedMenuItems(Narrow.searchedItem)
-    console.log("Narrow.found:" + Narrow.found);
     Narrow.getMenuItems = function(){
-      MenuSearchService.getMatchedMenuItems(Narrow.searchedItem)
-// MenuSearchService.getMatchedMenuItems(Narrow.searchedItem)
+        MenuSearchService.getMatchedMenuItems(Narrow.searchedItem).then(function(result){
+          Narrow.found = MenuSearchService.filteredResult;
+          Narrow.result = result;
+          console.log("controller results: " + result);
+        })
     }
 
-    // Narrow.getMenuItems();
-
-    // var Narrow = this;
-    // Narrow.searchTerm="";
-    // Narrow.searchTermSubmitted="";
-    //
-    // Narrow.found = [];
-    // Narrow.getMenuItems = function(){
-    //   // Filter search items description to lowcase
-    //   Narrow.searchTermSubmitted=$filter('lowercase')(Narrow.searchTerm);
-    //     var promise = MenuSearchService.getMatchedMenuItems(Narrow.searchTermSubmitted);
-    //     promise.then(function(result){
-    //       Narrow.found = result;
-    //     });
-    // };
-    //
-    // // remove one item with splice
-    //   Narrow.remoteItem = function(index){
-    //   Narrow.found.splice(index, 1);
-    //
-    //   Narrow.lastRemoveItem = Narrow.found[index].name + " was removed"
-    //
-    //   console.log(Narrow.lastRemoveItem)
-    //
-    // };
+    Narrow.remoteItem = function(index){
+      Narrow.lastRemoveItem = Narrow.found[index].name + " was removed"
+      Narrow.found.splice(index, 1);
+    };
 
   }
 
   MenuSearchService.$inject = ['$http','searchFilter','$filter']
   function MenuSearchService($http, searchFilter, $filter){
     var service = this;
-
-    service.kkk =[111]
-
-// Get http-data and fillter the list
     service.getMatchedMenuItems = function(SearchItem){
-
-      var filteredResultRaw = {};
-      var save
-
-
-
       return $http(
         {
           method:'GET',
           url:'https://davids-restaurant.herokuapp.com/menu_items.json'
         }
-      ).then(function(result){
-          if(SearchItem != ""){
+      ).then(
+        function successCallback(result){
+          if(SearchItem.trim() != ""){
+            service.filteredResult = [];
             service.searchNameLowerCase=$filter('lowercase')(SearchItem);
             service.filteredResult = searchFilter(result.data.menu_items, service.searchNameLowerCase);
+            // console.log('service.filteredResult  ' + service.filteredResult[0].description)
+            result = true;
+
+                    console.log('results true: ' + result);
           }
-           console.log('works! ' + service.filteredResult[0].description)
-          return service.filteredResult;
-
-      });
-
-
+          else{
+            result = false;
+            console.log('search something')
+                    console.log('results false: ' + result);
+          }
+                    console.log('results overall: ' + result);
+          return result
+        },
+        function errorCallback(response) {
+                console.log('link cannot be openned') }
+        );
     };
-
-
-
-
-    // service.searchTerm="";
-    //
-    // service.getItemsMatchedDescription = function(searchName){
-    //
-    //   searchLowerCase="";
-    //   service.found = [];
-    //
-    //   searchLowerCase=$filter('lowercase')(searchName);
-    //     var promise = service.getMatchedMenuItems(service.searchTermSubmitted);
-    //     promise.then(function(result){
-    //       service.found = result;
-    //     });
-    // };
-  //
-  //   // remove one item with splice
-  //     service.remoteItem = function(index){
-  //     service.found.splice(index, 1);
-  //
-  //     service.lastRemoveItem = Narrow.found[index].name + " was removed"
-  //
-  //     console.log(serivce.lastRemoveItem)
-  // }
 }
-
 
   function FoundItemsDirective(){
     var ddo = {
       templateUrl: 'foundItems.html',
+      // transclude: true,
       scope: {
         items: '<',
         onRemove: '&'
@@ -144,5 +96,17 @@
       return filtered;
     };
   }
+
+  // MenuSearchService.getMatchedMenuItems(Narrow.searchedItem)
+  // Use promise for this searhcing results, when search is returned in the end.
+          // var promise = MenuSearchService.getMatchedMenuItems(Narrow.searchedItem);
+          // promise.then(function(result){
+          //   // console.log('Narrow.found before ' + Narrow.found )
+          //   // console.log('MenuSearchService.filteredResult before ' + MenuSearchService.filteredResult )
+          //   Narrow.found = MenuSearchService.filteredResult
+          //   // console.log('Narrow.found after' + Narrow.found )
+          //   // console.log('MenuSearchService.filteredResult after' + MenuSearchService.filteredResult )
+          // })
+
 
 })();
